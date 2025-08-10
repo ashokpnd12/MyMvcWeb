@@ -38,5 +38,25 @@ namespace MyMvcWeb.Controllers
             }
             return View();
         }
+
+        public IActionResult Edit(int? id)
+        {
+            Category cat1 = _db.Categories.Find(id);
+            //Category cat2 = _db.Categories.FirstOrDefault(i => i.Id == id);
+            //Category cat3 = _db.Categories.Where(j => j.Id == id).FirstOrDefault();
+            return View(cat1);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Category obj)
+        {
+            if(ModelState.IsValid)
+            {
+                _db.Categories.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
     }
 }
