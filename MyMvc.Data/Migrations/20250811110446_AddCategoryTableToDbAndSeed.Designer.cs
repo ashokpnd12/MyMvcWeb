@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyMvcWeb.Data;
+using MyMvc.Data.Data;
 
 #nullable disable
 
-namespace MyMvcWeb.Migrations
+namespace MyMvc.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250810071753_SeedCategoryData")]
-    partial class SeedCategoryData
+    [Migration("20250811110446_AddCategoryTableToDbAndSeed")]
+    partial class AddCategoryTableToDbAndSeed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace MyMvcWeb.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("MyMvcWeb.Models.Category", b =>
+            modelBuilder.Entity("MyMvc.Model.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyMvcWeb.Models;
+using MyMvc.Model.Models;
 
-namespace MyMvcWeb.Data
+namespace MyMvc.Data.Data
 {
     public class ApplicationDbContext:DbContext
     {
@@ -11,20 +11,20 @@ namespace MyMvcWeb.Data
         public DbSet<Category> Categories { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MyMvcWeb.Models.Category>().HasData(
-                new MyMvcWeb.Models.Category
+            modelBuilder.Entity<MyMvc.Model.Models.Category>().HasData(
+                new MyMvc.Model.Models.Category
                 {
                     Id = 1,
                     Name = "Action",
                     DisplayOrder = 1
                 },
-                new MyMvcWeb.Models.Category
+                new MyMvc.Model.Models.Category
                 {
                     Id = 2,
                     Name = "Comedy",
                     DisplayOrder = 2
                 },
-                new MyMvcWeb.Models.Category
+                new MyMvc.Model.Models.Category
                 {
                     Id = 3,
                     Name = "Drama",

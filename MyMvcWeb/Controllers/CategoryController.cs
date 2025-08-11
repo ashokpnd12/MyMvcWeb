@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyMvcWeb.Data;
-using MyMvcWeb.Models;
+using MyMvc.Data.Data;
+using MyMvc.Model.Models;
 
 namespace MyMvcWeb.Controllers
 {
@@ -54,9 +54,22 @@ namespace MyMvcWeb.Controllers
             {
                 _db.Categories.Update(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Category updated successfully";
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (ModelState.IsValid)
+            {
+                Category obj=_db.Categories.Find(id);
+                _db.Categories.Remove(obj);
+                _db.SaveChanges();
+                TempData["success"] = "Category deleted successfully";
+            }
+            return RedirectToAction("Index");
         }
     }
 }
