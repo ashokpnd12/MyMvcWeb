@@ -3,19 +3,20 @@ using MyMvc.Data.Data;
 using MyMvc.Data.Repository.IRepository;
 using MyMvc.Model.Models;
 
-namespace MyMvcWeb.Controllers
+namespace MyMvcWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _categoryRepo;
-        public CategoryController(ICategoryRepository db)
+        private readonly IUnitOfWork _unitOfWork;
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _categoryRepo = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
             // Fetching categories from the database
-            List<Category> objCategoryList = _categoryRepo.GetAll().ToList();
+            List<Category> objCategoryList = _unitOfWork.Category.GetAll().ToList();
             return View(objCategoryList);
         }
 
@@ -32,8 +33,8 @@ namespace MyMvcWeb.Controllers
             }
             if (ModelState.IsValid)
             {
-                _categoryRepo.Add(obj);
-                _categoryRepo.save();
+                _unitOfWork.Category.Add(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category created successfully";
                 return RedirectToAction("Index");
             }
@@ -42,7 +43,7 @@ namespace MyMvcWeb.Controllers
 
         public IActionResult Edit(int? id)
         {
-            Category cat1 = _categoryRepo.Get(i=>i.Id==id);
+            Category cat1 = _unitOfWork.Category.Get(i => i.Id == id);
             //Category cat2 = _db.Categories.FirstOrDefault(i => i.Id == id);
             //Category cat3 = _db.Categories.Where(j => j.Id == id).FirstOrDefault();
             return View(cat1);
@@ -51,10 +52,10 @@ namespace MyMvcWeb.Controllers
         [HttpPost]
         public IActionResult Edit(Category obj)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                _categoryRepo.update(obj);
-                _categoryRepo.save();
+                _unitOfWork.Category.update(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category updated successfully";
                 return RedirectToAction("Index");
             }
@@ -65,9 +66,9 @@ namespace MyMvcWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                Category obj=_categoryRepo.Get(i=>i.Id==id);
-                _categoryRepo.Remove(obj);
-                _categoryRepo.save();
+                Category obj = _unitOfWork.Category.Get(i => i.Id == id);
+                _unitOfWork.Category.Remove(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category deleted successfully";
             }
             return RedirectToAction("Index");

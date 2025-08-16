@@ -17,10 +17,6 @@ namespace MyMvc.Data.Repository
         {
             this._db = db;
         }
-        public void save()
-        {
-            _db.SaveChanges();
-        }
 
         public void update(Category category)
         {
